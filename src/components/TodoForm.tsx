@@ -1,22 +1,27 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { LegacyRef, useEffect, useRef, useState } from 'react';
 
-function TodoForm(props) {
-  const [input, setInput] = useState(props.edit ? props.edit.value : '');
+const  TodoForm:React.FC<{
+    edit?: {
+    id: number | null;
+    value: string;
+};
+onSubmit: (todo: TodoItem) => void;}> = ({edit, onSubmit}) => {
+  const [input, setInput] = useState(edit ? edit.value : '');
 
-  const inputRef = useRef(null);
+  const inputRef:LegacyRef<any> = useRef(null);
 
   useEffect(() => {
     inputRef.current.focus();
   });
 
-  const handleChange = e => {
+  const handleChange = (e:any) => {
     setInput(e.target.value);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
 
-    props.onSubmit({
+    onSubmit({
       id: Math.floor(Math.random() * 10000),
       text: input
     });
@@ -25,7 +30,7 @@ function TodoForm(props) {
 
   return (
     <form onSubmit={handleSubmit} className='todo-form'>
-      {props.edit ? (
+      {edit ? (
         <>
           <input
             placeholder='Update your item'

@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { TiEdit } from 'react-icons/ti';
 import TodoForm from './TodoForm';
 
-const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
-  const [edit, setEdit] = useState({
+const Todo:React.FC<{
+    todos: any;
+    completeTodo:  (id?: number ) => void;
+    removeTodo: (id?: number) => void;
+    updateTodo: (todoId: number | null, newValue: TodoItem) => void;
+}> = ({todos,completeTodo,removeTodo,updateTodo}) => {
+  const [edit, setEdit] = useState<{id: number  | null;value: string}>({
     id: null,
     value: ''
   });
 
-  const submitUpdate = value => {
+  const submitUpdate = (value: TodoItem) => {
     updateTodo(edit.id, value);
     setEdit({
       id: null,
@@ -21,7 +26,7 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
     return <TodoForm edit={edit} onSubmit={submitUpdate} />;
   }
 
-  return todos.map((todo, index) => (
+  return todos.map((todo:TodoItem, index:number) => (
     <div
       className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
       key={index}
@@ -35,7 +40,7 @@ const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
           className='delete-icon'
         />
         <TiEdit
-          onClick={() => setEdit({ id: todo.id, value: todo.text })}
+          onClick={() => setEdit({ id: todo.id ? todo.id : null, value: todo.text ? todo.text : '' })}
           className='edit-icon'
         />
       </div>

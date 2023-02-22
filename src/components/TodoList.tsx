@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Todo from './Todo';
 import TodoForm from './TodoForm';
 
-const TodoList = () => {
+const TodoList:React.FC = () => {
   const [todos, setTodos] = useState<TodoItem[]>([]);
 
   const addTodo = (todo: TodoItem) => {
@@ -15,7 +15,7 @@ const TodoList = () => {
     setTodos(newTodos);
   };
 
-  const updateTodo = (todoId:number, newValue: TodoItem) => {
+  const updateTodo = (todoId:number | null, newValue: TodoItem) => {
     if (!newValue.text || /^\s*$/.test(newValue.text)) {
       return;
     }
@@ -23,13 +23,13 @@ const TodoList = () => {
     setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)));
   };
 
-  const removeTodo = (id: number) => {
+  const removeTodo = (id?: number ) => {
     const removedArr = [...todos].filter(todo => todo.id !== id);
 
     setTodos(removedArr);
   };
 
-  const completeTodo = (id: number) => {
+  const completeTodo = (id?: number ) => {
     let updatedTodos = todos.map(todo => {
       if (todo.id === id) {
         todo.isComplete = !todo.isComplete;

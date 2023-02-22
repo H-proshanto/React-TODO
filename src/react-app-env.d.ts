@@ -1,6 +1,7 @@
 /// <reference types="react-scripts" />
+
 interface TodoItem {
-    id: number;
-    isComplete: boolean;
-    text: string;
+    id?: number;
+    isComplete?: boolean;
+    text?: string;
 }
